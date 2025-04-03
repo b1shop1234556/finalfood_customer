@@ -11,7 +11,7 @@
 <div class="options-section">
     <div class="option" onclick="window.location.href='{{ url('/menu') }}'">
         <img src="{{ asset('/dinein.png') }}" alt="Eat In">
-        <h3 class="option-btn">Eat In</h3>
+        <h3 class="option-btn">Dine In</h3>
     </div>
     <div class="option" onclick="window.location.href='{{ url('/take-out') }}'">
         <img src="{{ asset('/takeout.png') }}" alt="Take Out">
