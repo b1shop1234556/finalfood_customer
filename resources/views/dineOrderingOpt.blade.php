@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/dineOrdering.css') }}">
 
 <div class="logo">
-    <img src="{{ asset('/dine.jpg') }}" alt="Logo">
+    <img src="{{ asset('/jollibee.png') }}" alt="Logo">
 </div>
 
 <div class="header-section">
