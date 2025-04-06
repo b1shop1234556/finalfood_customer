@@ -24,7 +24,7 @@
         <!-- At cod -->
         <a href="{{ url('/complete') }}" class="w-64 p-4 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition">
             <img src="/cod.png" alt="At Counter" class="w-24 mx-auto">
-            <h2 class="mt-3 text-lg font-semibold text-gray-700">CASH ON DELIVER</h2>
+            <h2 class="mt-3 text-lg font-semibold text-gray-700">PAY IN COUNTER</h2>
         </a>
     </div>
     

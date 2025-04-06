@@ -9,7 +9,7 @@
 </div>
 
 <div class="options-section">
-    <div class="option" onclick="window.location.href='{{ url('/menu') }}'">
+    <div class="option" onclick="window.location.href='{{ url('/payment') }}'">
         <img src="{{ asset('/dinein.png') }}" alt="Eat In">
         <h3 class="option-btn">Eat In</h3>
     </div>

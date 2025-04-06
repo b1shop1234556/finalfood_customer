@@ -7,7 +7,7 @@
             <!-- <a href="{{ url('/menu')}}" style="color: white; font: poppins; font-size: 20px; text-decoration: none;">
                 <h3>Touch to start</h3>
             </a> -->
-            <a href="{{ url('/dine')}}" style="color: white; font: poppins; font-size: 20px; text-decoration: none;">
+            <a href="{{ url('/menu')}}" style="color: white; font: poppins; font-size: 20px; text-decoration: none;">
                 <h3>Touch to start</h3>
             </a>
         </div>
