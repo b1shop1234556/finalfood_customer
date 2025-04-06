@@ -73,86 +73,142 @@
                     alt="{{ $menu->name }}" 
                     class="food-image w-full h-40 object-cover rounded-md mb-4">
 
-                <h3 class="font-semibold text-lg">{{ $menu->name }}</h3>
-                <p class="text-gray-600 text-sm">{{ $menu->description }}</p>
-                <p class="text-red-500 font-bold text-lg">₱{{ number_format($menu->price, 2) }}</p>
+                            <h3 class="font-semibold text-lg text-center">{{ $menu->name }}</h3>
+                            <p class="text-red-500 font-bold text-center text-lg">₱{{ number_format($menu->price, 2) }}</p>
+                            <div id="customize-modal-{{ $menu->menu_item_id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                                    <button 
+                                        onclick="closeCustomizeModal('{{ $menu->menu_item_id }}')" 
+                                        class="absolute top-2 right-2 bg-gray-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-700">
+                                        &times;
+                                    </button>
+                                    <h2 class="text-xl font-bold mb-4">Customize your Order</h2>
+                                    <img src="{{ asset($menu->menu_image) }}" alt="{{ $menu->name }}" class="w-full h-40 object-cover rounded-md mb-4">
+                                    <p class="text-lg font-semibold">{{ $menu->name }}</p>
+                                    <p class="text-sm text-gray-600">{{ $menu->description }}</p>
+                                    <p class="text-red-500 font-bold text-lg mb-4">₱{{ number_format($menu->price, 2) }}</p>
+                                    
+                                    <form action="{{ url('/cart/add', $menu->menu_item_id ) }}" method="POST" >
+                                        @csrf
+                                        <h1 for="quantity-{{ $menu->menu_item_id }}" class="block text-center font-bold text-gray-700 mb-2">Quantity</h1>
+                                        <div class="flex items-center justify-center w-full mb-4 font-bold">
+                                            <button type="button" onclick="decreaseQuantity('{{ $menu->menu_item_id }}')" class="px-5 py-5 bg-gray-300 rounded-l-md text-gray-700 hover:bg-gray-400 text-lg">-</button>
+                                            <input type="text" id="quantity-{{ $menu->menu_item_id }}" name="quantity" min="1" value="1" class="w-16 text-center border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 text-lg mx-2">
+                                            <button type="button" onclick="increaseQuantity('{{ $menu->menu_item_id }}')" class="px-5 py-5 bg-gray-300 rounded-r-md text-gray-700 hover:bg-gray-400 text-lg">+</button>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <button type="submit" class="bg-yellow-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
+                                                Order Now
+                                            </button>
+                                            <span 
+                                                onclick="closeCustomizeModal('{{ $menu->menu_item_id }}')" 
+                                                class="bg-gray-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-gray-700 cursor-pointer">
+                                                Cancel
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            function closeCustomizeModal(menuItemId) {
+                                const modal = document.getElementById(`customize-modal-${menuItemId}`);
+                                if (modal) {
+                                    modal.classList.add('hidden');
+                                }
+                            }
+                        </script>
+                    @endforeach
+<script>
+    function closeCustomizeModal(menuItemId) {
+        const modal = document.getElementById(`customize-modal-${menuItemId}`);
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+</script>
+                    <!-- @foreach ($menus as $menu)
+                    <div class="food-card bg-white p-4 rounded-lg shadow-lg relative" data-category="{{ $menu->category }}">
+                            <img src="{{ asset($menu->menu_image) }}" 
+                                alt="{{ $menu->name }}" 
+                                class="food-image w-60 h-60  rounded-md mb-4">
 
-                <form action="{{ url('/cart/add', $menu->menu_item_id ) }}" method="POST" onsubmit="return checkDuplicateOrder(event, '{{ $menu->menu_item_id }}')">
-                    @csrf
-                    <button type="submit"
-                        onclick="addToCart(event, '{{ asset($menu->menu_image) }}')" 
-                        @click.prevent="
-                        showFlyImage = true;
-                        setTimeout(() => showFlyImage = false, 700);
-                        $event.target.closest('.food-card').querySelector('form').submit();
-                        "
-                        class="block bg-yellow-500 mt-4 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
-                    Add to Cart
-                    </button>
-                </form>
+                            <h3 class="font-semibold text-lg">{{ $menu->name }}</h3>
+                            <p class="text-gray-600 text-sm">{{ $menu->description }}</p>
+                            <p class="text-red-500 font-bold text-lg">₱{{ number_format($menu->price, 2) }}</p>
+                            <button 
+                                onclick="openCustomizeModal('{{ $menu->menu_item_id }}', '{{ $menu->name }}', '{{ $menu->price }}', '{{ asset($menu->menu_image) }}')" 
+                                class="block bg-yellow-500 mt-4 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600 mx-auto">
+                                Add to Cart
+                            </button>
 
+                            <div id="customize-modal-{{ $menu->menu_item_id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                    <h2 class="text-xl font-bold mb-4">Customize your Order</h2>
+                                    <img src="{{ asset($menu->menu_image) }}" alt="{{ $menu->name }}" class="w-full h-40 object-cover rounded-md mb-4">
+                                    <p class="text-lg font-semibold">{{ $menu->name }}</p>
+                                    <p class="text-sm text-gray-600">{{ $menu->description }}</p>
+                                    <p class="text-red-500 font-bold text-lg mb-4">₱{{ number_format($menu->price, 2) }}</p>
+                                    
+                                    <form action="{{ url('/cart/add', $menu->menu_item_id ) }}" method="POST" >
+                                        @csrf
+                                        <h1 for="quantity-{{ $menu->menu_item_id }}" class="block text-center font-bold text-gray-700 mb-2">Quantity</h1>
+                                        <div class="flex items-center justify-center w-full mb-4 font-bold">
+                                            <button type="button" onclick="decreaseQuantity('{{ $menu->menu_item_id }}')" class="px-5 py-5 bg-gray-300 rounded-l-md text-gray-700 hover:bg-gray-400 text-lg">-</button>
+                                            <input type="text" id="quantity-{{ $menu->menu_item_id }}" name="quantity" min="1" value="1" class="w-16 text-center border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 text-lg mx-2">
+                                            <button type="button" onclick="increaseQuantity('{{ $menu->menu_item_id }}')" class="px-5 py-5 bg-gray-300 rounded-r-md text-gray-700 hover:bg-gray-400 text-lg">+</button>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <button type="submit" class="bg-yellow-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
+                                                Order Now
+                                            </button>
+                                            <span 
+                                                onclick="closeCustomizeModal('{{ $menu->menu_item_id }}')" 
+                                                class="bg-gray-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-gray-700">
+                                                Cancel
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach -->
                 </div>
+            </main>
+        </div>
+        <!-- Order Summary Section -->
+        <div class="fixed bottom-0 w-full bg-white shadow-lg p-4">
+            <h2 class="text-lg font-bold mb-4">Your Order</h2>
+            <div class="space-y-4 max-h-32 overflow-y-auto">
+                @if(session('cart') && count(session('cart')) > 0)
+                @foreach(session('cart') as $item)
+            <div class="flex justify-between items-center bg-yellow-100 p-2 rounded-lg">
+            <div class="flex items-center">
+            <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="h-12 w-12 rounded-md mr-2">
+            <div>
+            <p class="font-semibold">{{ $item['name'] }}</p>
+            <p class="text-sm text-gray-600">x{{ $item['quantity'] }}</p>
+            </div>
+            </div>
+            <div class="text-red-500 font-bold">₱{{ number_format($item['price'] * $item['quantity'], 2) }}</div>
+            </div>
             @endforeach
             </div>
-        </main>
-
-        <script>
-            function checkDuplicateOrder(event, menuItemId) {
-                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-                if (cartItems.includes(menuItemId)) {
-                    showModal('This item is already in your cart.');
-                    event.preventDefault();
-                    return false;
-                }
-                cartItems.push(menuItemId);
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            return true;
-            }
-        </script>
-    </div>
-
-    <script>
-        function addToCart(event, imageUrl) {
-            let cartIcon = document.getElementById('order-history');
-
-            let floatingImage = document.createElement('img');
-            floatingImage.src = imageUrl;
-            floatingImage.className = 'floating-img';
-            floatingImage.style.position = 'fixed';
-            floatingImage.style.width = '200px';
-            floatingImage.style.height = '200px';
-            floatingImage.style.borderRadius = '50%';
-            floatingImage.style.zIndex = '1000';
-            floatingImage.style.transition = 'all 0.7s ease-in-out';
-
-            document.body.appendChild(floatingImage);
-
-            let rect = event.target.getBoundingClientRect();
-            floatingImage.style.left = `${rect.left + window.scrollX}px`;
-            floatingImage.style.top = `${rect.top + window.scrollY}px`;
-
-            let cartRect = cartIcon.getBoundingClientRect();
-            
-            setTimeout(() => {
-                floatingImage.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.3)`;
-                floatingImage.style.opacity = '0';
-            }, 100);
-
-            setTimeout(() => document.body.removeChild(floatingImage), 700);
-
-            // Send AJAX request to Laravel to add item to cart
-            fetch('/cart/add', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ menu_item_id: event.target.getAttribute('data-id') })
-            }).then(response => response.json())
-            .then(data => console.log('Item added:', data));
-        }
-    </script>
-    
-   
-</body>
+            <div class="mt-4 flex justify-between items-center">
+            <form action="{{ url('/cart/reset') }}" method="POST">
+            @csrf
+            <button type="submit" class="bg-red-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-red-700">
+                Cancel
+            </button>
+            </form>
+            <button class="bg-green-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-green-700">
+            Review + Pay For Order
+            </button>
+            <div class="text-lg font-bold">
+            Order Total: <span class="text-yellow-400">₱{{ session('cart_total', '0.00') }}</span>
+            </div>
+            </div>
+        </div>
+        </div>
+        </body>
 </html>
