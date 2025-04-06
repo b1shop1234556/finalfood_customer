@@ -11,22 +11,23 @@
     <img src="/poster.jpg" alt="Food Item" class="w-full h-80 object-cover">
     
     <div class="mt-6 text-center">
-        <h1 class="text-3xl font-bold text-gray-800">Select Payment Type</h1>
+        <h1 class="text-3xl font-bold text-gray-800">How will you make to pay?</h1>
     </div>
 
-    <div class="mt-8 flex flex-wrap justify-center gap-6">
-        <!-- Pay gcash -->
-        <a href="{{ url('/payment') }}" class="w-64 p-4 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition">
-            <img src="/gcashs.png" alt="Pay Here" class="w-24 mx-auto">
-            <h2 class="mt-3 text-lg font-semibold text-gray-700">PAY ON GCASH</h2>
+    <div class="mt-8 flex flex-col items-center gap-12">
+        <!-- Debit and Credit -->
+        <a href="{{ url('/debit-credit') }}" class="w-[30rem] p-12 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition flex items-center gap-8">
+            <img src="/card.png" alt="Debit / Credit" class="w-20 h-20">
+            <h2 class="mt-4 text-2xl font-semibold text-gray-700">Debit / Credit</h2>
         </a>
         
         <!-- At cod -->
         <a href="{{ url('/complete') }}" class="w-64 p-4 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition">
             <img src="/cod.png" alt="At Counter" class="w-24 mx-auto">
-            <h2 class="mt-3 text-lg font-semibold text-gray-700">PAY IN COUNTER</h2>
+            <h2 class="mt-3 text-lg font-semibold text-gray-700">CASH ON DELIVER</h2>
         </a>
     </div>
+    
     
     <div class="mt-8">
         <a href="{{ url('/order') }}" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">Back to Order</a>
