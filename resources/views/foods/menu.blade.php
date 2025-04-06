@@ -177,44 +177,32 @@
                 </div>
             </main>
         </div>
-        <!-- Order Summary Section -->
-        <div class="fixed bottom-0 w-full bg-white shadow-lg p-4">
+       <!-- Order Summary Section -->
+       <div id="order-summary" class="fixed bottom-0 w-full bg-white shadow-lg p-4">
+            <div class="flex justify-between items-center">
             <h2 class="text-lg font-bold mb-4">Your Order</h2>
-            <div class="space-y-4 max-h-32 overflow-y-auto">
-                @if(session('cart') && count(session('cart')) > 0)
-                @foreach(session('cart') as $item)
+            <button id="toggle-summary" class="bg-gray-300 px-4 py-2 rounded-lg font-semibold text-black hover:bg-gray-400">
+                Hide
+            </button>
+            </div>
+            <div id="order-details" class="space-y-4 max-h-32 overflow-y-auto">
+            @if(session('cart') && count(session('cart')) > 0)
+            @foreach(session('cart') as $item)
             <div class="flex justify-between items-center bg-yellow-100 p-2 rounded-lg">
-            <div class="flex items-center">
-            <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="h-12 w-12 rounded-md mr-2">
-            <div>
-            <p class="font-semibold">{{ $item['name'] }}</p>
-            <p class="text-sm text-gray-600">x{{ $item['quantity'] }}</p>
-            </div>
-            </div>
-            <div class="text-red-500 font-bold">₱{{ number_format($item['price'] * $item['quantity'], 2) }}</div>
-       
+                <div class="flex items-center">
+                <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="h-12 w-12 rounded-md mr-2">
+                <div>
+                    <p class="font-semibold">{{ $item['name'] }}</p>
+                    <p class="text-sm text-gray-600">x{{ $item['quantity'] }}</p>
+                </div>
+                </div>
+                <div class="text-red-500 font-bold">₱{{ number_format($item['price'] * $item['quantity'], 2) }}</div>
             </div>
             @endforeach
             @else
             <p class="text-gray-500 text-center">Your cart is empty.</p>
             @endif
             </div>
-            <div class="mt-4 flex justify-between items-center">
-            <form action="{{ url('/cart/reset') }}" method="POST">
-            @csrf
-            <button type="submit" class="bg-red-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-red-700">
-                Cancel
-            </button>
-            </form>
-            <button class="bg-green-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-green-700">
-            Review + Pay For Order
-            </button>
-            <div class="text-lg font-bold">
-            Order Total: <span class="text-yellow-400">₱{{ session('cart_total', '0.00') }}</span>
-            </div>
-            </div>
-        </div>
-        </div>
             <div id="order-actions" class="mt-4 flex justify-between items-center">
             <form action="{{ url('/cart/reset') }}" method="POST">
                 @csrf
