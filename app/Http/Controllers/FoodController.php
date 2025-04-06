@@ -69,4 +69,3 @@ class FoodController extends Controller
         return view('foods.thankyou'); 
     }
 }
-

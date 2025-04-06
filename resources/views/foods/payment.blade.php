@@ -20,10 +20,11 @@
             <img src="/card.png" alt="Debit / Credit" class="w-20 h-20">
             <h2 class="mt-4 text-2xl font-semibold text-gray-700">Debit / Credit</h2>
         </a>
-        <!-- Pay at the Counter -->
-        <a href="{{ url('/thankyou') }}" class="w-[30rem] p-12 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition flex items-center gap-8">
-            <img src="/pay.png" alt="Pay at the Counter" class="w-20 h-20">
-            <h2 class="text-2xl font-semibold text-gray-700">Pay at the Counter</h2>
+        
+        <!-- At cod -->
+        <a href="{{ url('/complete') }}" class="w-64 p-4 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition">
+            <img src="/cod.png" alt="At Counter" class="w-24 mx-auto">
+            <h2 class="mt-3 text-lg font-semibold text-gray-700">CASH ON DELIVER</h2>
         </a>
     </div>
     

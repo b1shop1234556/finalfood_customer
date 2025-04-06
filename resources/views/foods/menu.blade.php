@@ -192,6 +192,7 @@
             </div>
             </div>
             <div class="text-red-500 font-bold">₱{{ number_format($item['price'] * $item['quantity'], 2) }}</div>
+       
             </div>
             @endforeach
             @else
@@ -214,5 +215,40 @@
             </div>
         </div>
         </div>
+            <div id="order-actions" class="mt-4 flex justify-between items-center">
+            <form action="{{ url('/cart/reset') }}" method="POST">
+                @csrf
+                <button type="submit" class="bg-red-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-red-700">
+                Cancel
+                </button>
+            </form>
+            <button class="bg-green-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-green-700">
+                Review + Pay For Order
+            </button>
+            <div class="text-lg font-bold">
+                Order Total: <span class="text-yellow-400">₱{{ session('cart_total', '0.00') }}</span>
+            </div>
+            </div>
+        </div>
+
+        <script>
+            const toggleButton = document.getElementById('toggle-summary');
+            const orderSummary = document.getElementById('order-summary');
+            const orderDetails = document.getElementById('order-details');
+            const orderActions = document.getElementById('order-actions');
+
+            toggleButton.addEventListener('click', () => {
+            const isHidden = orderDetails.classList.contains('hidden');
+            if (isHidden) {
+                orderDetails.classList.remove('hidden');
+                orderActions.classList.remove('hidden');
+                toggleButton.textContent = 'Hide';
+            } else {
+                orderDetails.classList.add('hidden');
+                orderActions.classList.add('hidden');
+                toggleButton.textContent = 'Show';
+            }
+            });
+        </script>
         </body>
 </html>
