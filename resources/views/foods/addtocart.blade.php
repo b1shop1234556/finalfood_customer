@@ -18,8 +18,6 @@
             </svg>
             </a>
         </div>
-        <!-- <button class="bg-yellow-400 px-2 py-1 rounded-lg font-semibold">Order History</button>
-        <button class="bg-yellow-400 px-2 py-1 rounded-lg font-semibold">Order History</button> -->
     </nav>
     <section class="max-w-6xl mx-auto mt-12 px-4">
         <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">Your Cart</h2>
