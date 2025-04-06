@@ -17,6 +17,7 @@ Route::get('/dine', function () {
 
 Route::get('/menu',[FoodController::class,'menu']);
 Route::get('/order',[FoodController::class,'order']);
+Route::get('/thankyou', [FoodController::class, 'thankyou']);
 Route::post('/cart/add/{menu_item_id}', [FoodController::class, 'addToCart']);
 Route::post('/cart/update/{id}', [FoodController::class, 'updateCart']);
 Route::post('/cart/remove/{id}', [FoodController::class, 'removeFromCart']);
