@@ -1,77 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Ordering</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        function filterMenu(category) {
-            document.querySelectorAll('.food-card').forEach(card => {
-                card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
-            });
-
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('bg-yellow-900', 'text-white'); // Remove highlight
-                btn.classList.add('bg-yellow-700'); // Reset default color
-            });
-
-            const activeButton = document.querySelector(`[data-category-btn="${category}"]`);
-            if (activeButton) {
-                activeButton.classList.add('bg-yellow-900', 'text-white'); // Highlight selection
-                activeButton.classList.remove('bg-yellow-700'); // Remove default color
-            }
-        }
-    </script>
-
-</head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-    
-     <!-- Header -->
-     <nav class="bg-blue-100 w-full p-4 shadow-md flex justify-between items-center text-white">
-        <h1 class="text-2xl text-red-500 font-bold ml-2">Welcome</h1>
-        <div class="flex space-x-2">
-            <a id="order-history" href="{{ url('/order') }}" class="bg-red-500 px-2 py-1 rounded-lg font-semibold flex items-center relative">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M7 4h-2l-1 2h-2v2h2l3.6 7.59-1.35 2.44c-.16.29-.25.63-.25.97 0 1.1.9 2 2 2h12v-2h-12l1.1-2h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.3.12-.47 0-.55-.45-1-1-1h-14.31l-.94-2zm3 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Food Ordering</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="{{ asset('scripts/menu.js') }}"></script>
+    </head>
+    <body class="bg-gray-100  flex flex-col"> 
+        <!-- Header -->
+        <nav class="sticky top-0 bg-blue-100 w-full p-4 shadow-md flex justify-between items-center text-white z-50">
+            <h1 class="text-2xl text-red-500 font-bold ml-2">Welcome</h1>
+            <div class="flex space-x-2">
+                <a id="order-history" href="{{ url('/order') }}" class="bg-red-500 px-2 py-1 rounded-lg font-semibold flex items-center relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7 4h-2l-1 2h-2v2h2l3.6 7.59-1.35 2.44c-.16.29-.25.63-.25.97 0 1.1.9 2 2 2h12v-2h-12l1.1-2h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.3.12-.47 0-.55-.45-1-1-1h-14.31l-.94-2zm3 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded-full transform translate-x-1/2 -translate-y-1/2">
+                        {{ session('cart') ? count(session('cart')) : 0 }}
+                    </span>
+                </a>
+                <a href="/" class="bg-yellow-400 px-2 py-1 rounded-lg font-semibold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 2a1 1 0 00-.707.293l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4a1 1 0 001-1v-4h2v4a1 1 0 001 1h4a1 1 0 001-1v-6.586l1.293 1.293a1 1 0 001.414-1.414l-7-7A1 1 0 0010 2z" fill="black" />
                 </svg>
-                <span id="cart-count" class="absolute top-0 right-0 bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded-full transform translate-x-1/2 -translate-y-1/2">
-                    {{ session('cart') ? count(session('cart')) : 0 }}
-                </span>
-            </a>
-            <a href="/" class="bg-yellow-400 px-2 py-1 rounded-lg font-semibold flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10 2a1 1 0 00-.707.293l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4a1 1 0 001-1v-4h2v4a1 1 0 001 1h4a1 1 0 001-1v-6.586l1.293 1.293a1 1 0 001.414-1.414l-7-7A1 1 0 0010 2z" fill="black" />
-            </svg>
-            </a>
-        </div>
-    </nav>
-    
-    <div class="flex flex-1">
-        <!-- Sidebar Navigation -->
-        <!-- Sidebar Navigation -->
-        <aside class="w-64 bg-yellow-600 text-white p-6 min-h-screen mt-1">
-            <h2 class="text-2xl font-bold mb-4">Categories</h2>
-            <nav class="space-y-2">
-                <!-- Dynamic category buttons -->
-                <button data-category-btn="all" onclick="filterMenu('all')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
-                    <img src="/remove.png" alt="All" class="h-10 w-15 mr-2"> All
-                </button>
-                @foreach($categories as $category)
-                    <button data-category-btn="{{ strtolower($category->category) }}" onclick="filterMenu('{{ strtolower($category->category) }}')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
-                        <img src="/{{ strtolower($category->category) }}.png" alt="{{ $category->category }}" class="h-10 w-15 mr-2"> {{ ucfirst($category->category) }}
-                    </button>
-                @endforeach
-            </nav>
-        </aside>
+                </a>
+            </div>
+        </nav>
 
-        <main class="flex-1 p-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @foreach ($menus as $menu)
-                <div class="food-card bg-white p-4 rounded-lg shadow-lg relative" data-category="{{ $menu->category }}">
-                <img src="{{ asset($menu->menu_image) }}" 
-                    alt="{{ $menu->name }}" 
-                    class="food-image w-full h-40 object-cover rounded-md mb-4">
+        <div class="flex flex-wrap">
+            <aside class="sticky top-[4rem] w-full md:w-1/4 bg-white text-black p-5 h-[calc(100vh-4rem)] overflow-y-auto shadow-lg border border-gray-300 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">Menu</h2>
+                <nav class="space-y-2">
+                    <!-- Dynamic category buttons -->
+                    <button data-category-btn="value-meals" onclick="filterMenu('all')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                         All Value Meals
+                    </button>
+                    <button data-category-btn="breakfast" onclick="filterMenu('breakfast')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/breakfast.png" alt="breakfast" class="h-8 w-8 mr-2"> Breakfast
+                    </button>
+                    <button data-category-btn="burgers" onclick="filterMenu('burgers')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/Burgers.png" alt="burgers" class="h-8 w-8 mr-2"> Burgers
+                    </button>
+                    <button data-category-btn="chickenjoy" onclick="filterMenu('chickenjoy')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/chickenjoy.png" alt="Jolly chickenjoy" class="h-8 w-8 mr-2"> Chickenjoy
+                    </button>
+                    <button data-category-btn="jollyhotdog" onclick="filterMenu('jollyhotdog')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/hotdog.png" alt="Jolly Hotdog" class="h-8 w-8 mr-2"> Jolly Hotdog
+                    </button>
+                    <button data-category-btn="spaghetti" onclick="filterMenu('spaghetti')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/jolly.png" alt="Jolly Spaghetti" class="h-8 w-8 mr-2"> Jolly Spaghetti
+                    </button>
+                    <button data-category-btn="burgersteak" onclick="filterMenu('burgersteak')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/steak.png" alt="Burger Steak" class="h-8 w-8 mr-2"> Burger Steak
+                    </button>
+                    <button data-category-btn="beverages" onclick="filterMenu('beverages')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/cokess.png" alt="Burger Steak" class="h-8 w-8 mr-2"> Beverages
+                    </button>
+                    <button data-category-btn="desserts" onclick="filterMenu('desserts')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/Peach.png" alt="Desserts" class="h-8 w-8 mr-2"> Desserts
+                    </button>
+                    <button data-category-btn="palabok" onclick="filterMenu('palabok')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border border-gray-300 rounded-lg">
+                        <img src="/palabok.png" alt="Palabok" class="h-8 w-8 mr-2"> Palabok
+                    </button>
+                </nav>
+            </aside>
+            <main class="w-full md:w-3/4 p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    @foreach ($menus as $menu)
+                        <div class="food-card bg-white p-4 rounded-lg shadow-lg relative" data-category="{{ $menu->category }}" onclick="openCustomizeModal('{{ $menu->menu_item_id }}', '{{ $menu->name }}', '{{ $menu->price }}', '{{ asset($menu->menu_image) }}')" >
+                            <img src="{{ asset($menu->menu_image) }}" 
+                                alt="{{ $menu->name }}" 
+                                class="food-image w-full h-40 object-cover rounded-md mb-4">
 
                             <h3 class="font-semibold text-lg text-center">{{ $menu->name }}</h3>
                             <p class="text-red-500 font-bold text-center text-lg">₱{{ number_format($menu->price, 2) }}</p>
@@ -193,6 +194,9 @@
             <div class="text-red-500 font-bold">₱{{ number_format($item['price'] * $item['quantity'], 2) }}</div>
             </div>
             @endforeach
+            @else
+            <p class="text-gray-500 text-center">Your cart is empty.</p>
+            @endif
             </div>
             <div class="mt-4 flex justify-between items-center">
             <form action="{{ url('/cart/reset') }}" method="POST">
