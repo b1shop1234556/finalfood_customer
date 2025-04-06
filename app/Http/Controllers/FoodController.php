@@ -63,4 +63,9 @@ class FoodController extends Controller
     {
         return view('foods.payment'); 
     }
+
+    public function thankyou()
+    {
+        return view('foods.thankyou'); 
+    }
 }
