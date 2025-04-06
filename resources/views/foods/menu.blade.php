@@ -30,21 +30,42 @@
         </nav>
 
         <div class="flex flex-wrap">
-            <aside class="w-64 bg-yellow-600 text-white p-6 min-h-screen mt-1">
+            <aside class="sticky top-[4rem] w-full md:w-1/4 bg-yellow-600 text-white p-5 h-[calc(100vh-4rem)] overflow-y-auto">
                 <h2 class="text-2xl font-bold mb-4">Categories</h2>
                 <nav class="space-y-2">
                     <!-- Dynamic category buttons -->
                     <button data-category-btn="all" onclick="filterMenu('all')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
-                        <img src="/remove.png" alt="All" class="h-10 w-15 mr-2"> All
+                    <img src="/remove.png" alt="All" class="h-8 w-8 mr-2"> All
                     </button>
-                    @foreach($categories as $category)
-                        <button data-category-btn="{{ strtolower($category->category) }}" onclick="filterMenu('{{ strtolower($category->category) }}')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
-                            <img src="/{{ strtolower($category->category) }}.png" alt="{{ $category->category }}" class="h-10 w-15 mr-2"> {{ ucfirst($category->category) }}
-                        </button>
-                    @endforeach
+                    <button data-category-btn="breakfast" onclick="filterMenu('breakfast')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/breakfast.png" alt="Breakfast" class="h-8 w-8 mr-2"> Breakfast
+                    </button>
+                    <button data-category-btn="burgers" onclick="filterMenu('burgers')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/Burgers.png" alt="Burgers" class="h-8 w-8 mr-2"> Burgers
+                    </button>
+                    <button data-category-btn="chickenjoy" onclick="filterMenu('chickenjoy')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/chickenjoy.png" alt="Chickenjoy" class="h-8 w-8 mr-2"> Chickenjoy
+                    </button>
+                    <button data-category-btn="jollyhotdog" onclick="filterMenu('jollyhotdog')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/hotdog.png" alt="Jolly Hotdog" class="h-8 w-8 mr-2"> Jolly Hotdog
+                    </button>
+                    <button data-category-btn="spaghetti" onclick="filterMenu('spaghetti')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/jolly.png" alt="Jolly Spaghetti" class="h-8 w-8 mr-2"> Jolly Spaghetti
+                    </button>
+                    <button data-category-btn="burgersteak" onclick="filterMenu('burgersteak')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/steak.png" alt="Burger Steak" class="h-8 w-8 mr-2"> Burger Steak
+                    </button>
+                    <button data-category-btn="beverages" onclick="filterMenu('beverages')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/cokess.png" alt="Beverages" class="h-8 w-8 mr-2"> Beverages
+                    </button>
+                    <button data-category-btn="desserts" onclick="filterMenu('desserts')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/Peach.png" alt="Desserts" class="h-8 w-8 mr-2"> Desserts
+                    </button>
+                    <button data-category-btn="palabok" onclick="filterMenu('palabok')" class="category-btn w-full px-4 py-2 bg-yellow-700 rounded-lg flex items-center">
+                    <img src="/palabok.png" alt="Palabok" class="h-8 w-8 mr-2"> Palabok
+                    </button>           
                 </nav>
             </aside>
-            
             <main class="w-full md:w-3/4 p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     @foreach ($menus as $menu)

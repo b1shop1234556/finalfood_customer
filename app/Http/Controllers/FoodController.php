@@ -10,11 +10,7 @@ class FoodController extends Controller
     public function menu()
     {
         $menus = Menus::all();  
-        $categories = Menus::select('category')->distinct()->get(); // Get unique categories
-        
-        return view('foods.menu', compact('menus', 'categories')); 
-        
-        // return view('foods.menu', compact('menus')); 
+        return view('foods.menu', compact('menus')); 
     }
 
     public function order()
