@@ -72,7 +72,7 @@
 
                 <div class="mt-6 flex justify-between">
                     <a href="{{ url('/menu') }}" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-300 transition duration-300">Back</a>
-                    <a href="{{ url('/payment') }}" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-300 transition duration-300">Proceed to Checkout</a>
+                    <a href="{{ url('/dine') }}" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-300 transition duration-300">Proceed to Checkout</a>
                 </div>
             @else
                 <p class="text-center text-gray-500">Your cart is empty.</p>
