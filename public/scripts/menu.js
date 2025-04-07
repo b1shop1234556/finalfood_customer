@@ -4,14 +4,14 @@ function filterMenu(category) {
     });
 
     document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.classList.remove('bg-yellow-900', 'text-white'); 
-        btn.classList.add('bg-yellow-700'); 
+        btn.classList.remove('bg-yellow-100', 'text-black'); 
+        btn.classList.add('bg-yellow-100'); 
     });
 
     const activeButton = document.querySelector(`[data-category-btn="${category}"]`);
     if (activeButton) {
-        activeButton.classList.add('bg-yellow-900', 'text-white'); 
-        activeButton.classList.remove('bg-yellow-700'); 
+        activeButton.classList.add('bg-yellow-100', 'text-black'); 
+        activeButton.classList.remove('bg-yellow-100'); 
     }
 }
 function checkDuplicateOrder(event, menuItemId) {
