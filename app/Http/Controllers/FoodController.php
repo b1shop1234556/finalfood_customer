@@ -23,14 +23,17 @@ class FoodController extends Controller
         $menu = Menus::findOrFail($menu_item_id);
         $cart = session()->get('cart', []);
 
+        $requestedQuantity = max((int)$request->input('quantity', 1), 1); 
+
         if (isset($cart[$menu_item_id])) {
-            $cart[$menu_item_id]['quantity'] += 1;
+            $cart[$menu_item_id]['quantity'] += $requestedQuantity;
         } else {
             $cart[$menu_item_id] = [
                 "name" => $menu->name,
                 "price" => $menu->price,
-                "image" => $menu->menu_image, 
-                "quantity" => 1
+                "image" => $menu->menu_image,
+                "quantity" => $requestedQuantity,
+                "id" => $menu->menu_item_id
             ];
         }
 
@@ -38,6 +41,7 @@ class FoodController extends Controller
 
         return redirect()->back()->with('success', 'Item added to cart!');
     }
+
 
     public function updateCart(Request $request, $id)
     {
@@ -58,6 +62,14 @@ class FoodController extends Controller
         }
         return redirect()->back()->with('success', 'Item removed from cart');
     }
+
+    public function clearCart(Request $request)
+    {
+        session()->forget('cart');
+
+        return redirect()->route('orderview')->with('success', 'Cart has been cleared!');
+    }
+
 
     public function payment()
     {

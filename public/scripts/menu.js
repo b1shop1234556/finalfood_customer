@@ -81,3 +81,10 @@ function increaseQuantity(id) {
     const input = document.getElementById(`quantity-${id}`);
     input.value = parseInt(input.value) + 1;
 }
+function closeCustomizeModal(menuItemId) {
+    const modal = document.getElementById(`customize-modal-${menuItemId}`);
+    if (modal) {
+        // modal.classList.add('hidden');
+        modal.style.display = "none";
+    }
+}

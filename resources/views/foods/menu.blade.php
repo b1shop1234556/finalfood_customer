@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="grid grid-cols-2 gap-4">
                                             <button type="submit" class="bg-yellow-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
-                                                Order Now
+                                                Add to Cart
                                             </button>
                                             <span 
                                                 onclick="closeCustomizeModal('{{ $menu->menu_item_id }}')" 
@@ -93,17 +93,7 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <script>
-                            function closeCustomizeModal(menuItemId) {
-                                const modal = document.getElementById(`customize-modal-${menuItemId}`);
-                                if (modal) {
-                                    // modal.classList.add('hidden');
-                                    modal.style.display = "none";
-                                }
-                            }
-                        </script>
-                        @endforeach
+                    @endforeach
                 </div>
             </main>
         </div>
@@ -121,10 +111,13 @@
             </div>
             <div id="order-details" class="space-y-4 max-h-32 overflow-y-auto">
             @if(session('cart') && count(session('cart')) > 0)
+            @php $total = 0; @endphp
             @foreach(session('cart') as $item)
+            @php $total += $item['price'] * $item['quantity']; @endphp
             <div class="flex items-center rounded-lg">
                 <div class="flex-2 p-3 rounded-lg">
                     <div class="text-red-500 font-bold text-sm">
+                        <!-- <p class="text-sm text-gray-600">x{{ $item['id'] }}</p> -->
                         <p class="text-sm text-gray-600">x{{ $item['quantity'] }}</p>
                     </div>
                 </div>
@@ -132,7 +125,6 @@
                     <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="h-12 w-12 rounded-md mr-2">
                     <div class="flex-1">
                         <p class="font-semibold">{{ $item['name'] }}</p>
-                        
                     </div>
                     <div class="text-black font-bold">
                         ₱{{ number_format($item['price'] * $item['quantity'], 2) }}
@@ -141,23 +133,13 @@
 
                 <div class="flex justify-between items-center p-3 rounded-lg">
                     <div class="flex space-x-2">
-                        <button  class="text-gray-500 hover:text-blue-700 px-3">
-                            <i class='fa fa-pencil'></i>
-                        </button>
-                        <form  method="POST">
+                        <form action="{{ url('/cart/remove', $item['id']) }}" method="POST">
                             @csrf
                             <button type="submit" class="text-gray-500 hover:text-red-700">
                                 <i class="fa fa-trash-o"></i>
                             </button>
                         </form>
-                       
                     </div>
-                    <!-- <script>
-                        function editCartItem(itemId) {
-                            // Add your logic to handle editing the cart item
-                            alert('Edit functionality for item ID: ' + itemId);
-                        }
-                    </script> -->
                 </div>
             </div>
             @endforeach
@@ -166,7 +148,7 @@
             @endif
             </div>
             <div id="order-actions" class="mt-4 flex justify-between items-center">
-                <form action="{{ url('/') }}">
+                <form action="{{ url('/cart/clear') }}">
                     @csrf
                     <button type="submit" class="bg-red-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-red-700">
                         Cancel
@@ -175,9 +157,11 @@
                 <a href="{{ url('/order') }}" class="bg-green-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-green-700">
                     Review + Pay For Order
                 </a>
-                <div class="text-lg font-bold">
-                    Order Total: <span class="text-yellow-400">₱{{ session('cart_total', '0.00') }}</span>
-                </div>
+                @if(session('cart') && count(session('cart')) > 0)
+                    <div class="text-lg font-bold">
+                        Order Total: <span class="text-yellow-400">₱{{ number_format($total, 2) }}</span>
+                    </div>
+                @endif
             </div>
         </div>
         </body>

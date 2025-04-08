@@ -21,7 +21,13 @@
     </div>
 
     <div class="mt-8">
-        <a href="/" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">TAP!</a>
+        <!-- <a href="/" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">TAP!</a> -->
+        <form action="{{ url('/cart/clear') }}">
+            @csrf
+            <button type="submit" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">
+                TAP!
+            </button>
+        </form>
     </div>
 
 </body>
