@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Menus;
 
 class FoodController extends Controller
@@ -70,6 +71,49 @@ class FoodController extends Controller
         return redirect()->route('orderview')->with('success', 'Cart has been cleared!');
     }
 
+    public function orders(Request $request)
+    {
+        $orderId = random_int(100000, 999999);
+        $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Cart is empty!');
+        }
+
+        $totalPrice = 0;
+
+        foreach ($cart as $item) {
+            $subtotal = $item['price'] * $item['quantity'];
+            $totalPrice += $subtotal;
+
+            DB::table('order_items')->insert([
+                'order_id' => $orderId, 
+                'menu_item_id' => $item['id'],
+                'quantity' => $item['quantity'],
+                'subtotal' => $subtotal,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        DB::table('orders')->insert([
+            'order_id' => $orderId,
+            'total_price' => $totalPrice,
+            'status' => 'dine in',
+            'order_date' => now(),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        session()->forget('cart'); 
+
+        $ordersss = DB::table('order_items')
+            ->where('order_id', $orderId)
+            ->get();
+
+        return view('foods.thankyou', compact('ordersss')); 
+    }
+
 
     public function payment()
     {
@@ -78,7 +122,7 @@ class FoodController extends Controller
 
     public function thankyou()
     {
-        return view('foods.thankyou'); 
+        return view('foods.thankyou', compact('ordersss'));
     }
 
     public function receipt()

@@ -14,14 +14,24 @@
     </div>
 
     <div class="options-section">
-        <div class="option dine-in" onclick="window.location.href='{{ url('/payment') }}'">
+        <div class="option dine-in" onclick="handleOptionSelection('dine-in')">
             <img src="{{ asset('/dinein.png') }}" alt="Dine In">
             <h3>Dine In</h3>
         </div>
-        <div class="option takeout" onclick="window.location.href='{{ url('/takeout') }}'">
+        <div class="option takeout" onclick="handleOptionSelection('takeout')">
             <img src="{{ asset('/takeout.png') }}" alt="Takeout">
             <h3>Takeout</h3>
         </div>
+
+        <script>
+            function handleOptionSelection(option) {
+            if (option === 'dine-in') {
+                window.location.href = '{{ url('/payment?type=dine-in') }}';
+            } else if (option === 'takeout') {
+                window.location.href = '{{ url('/payment?type=takeout') }}';
+            }
+            }
+        </script>
     </div>
 </div>
 
