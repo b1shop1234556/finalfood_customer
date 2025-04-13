@@ -80,4 +80,9 @@ class FoodController extends Controller
     {
         return view('foods.thankyou'); 
     }
+
+    public function receipt()
+    {
+        return view('foods.receipt'); 
+    }
 }

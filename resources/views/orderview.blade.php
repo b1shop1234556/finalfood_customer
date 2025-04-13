@@ -8,7 +8,9 @@
                 <h3>Touch to start</h3>
             </a> -->
             <a href="{{ url('/menu')}}" style="color: white; font: poppins; font-size: 20px; text-decoration: none;">
-                <h3>Touch to start</h3>
+                <button style="background-color: transparent; border: none; color: white; font: poppins; font-size: 20px; cursor: pointer;">
+                    <h3>Touch to start</h3>
+                </button>
             </a>
         </div>
     </div>

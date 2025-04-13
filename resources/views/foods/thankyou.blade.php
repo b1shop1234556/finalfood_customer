@@ -16,7 +16,7 @@
     <!-- Thank You Message -->
     <div class="mt-6 text-center">
         <h1 class="text-4xl font-bold">Thank You</h1>
-        <p class="mt-2 text-lg">Your order number is <span class="font-bold text-2xl">0008</span></p>
+        <p class="mt-2 text-lg">Your order number is <span class="font-bold text-2xl">{{ str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT) }}</span></p>
         <p class="mt-2 text-lg">Please pay at the counter.</p>
     </div>
 
