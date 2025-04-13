@@ -11,7 +11,6 @@
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body class="bg-gray-100  flex flex-col"> 
-        <!-- Header -->
         <nav class="sticky top-0 bg-blue-100 w-full p-1 shadow-md flex justify-between items-center text-white z-50" style="background-image: url('/sample.png'); background-size: cover; background-position: center;">
             <img  class="h-16 w-auto">
         </nav>
