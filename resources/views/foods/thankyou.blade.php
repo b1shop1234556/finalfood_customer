@@ -16,12 +16,18 @@
     <!-- Thank You Message -->
     <div class="mt-6 text-center">
         <h1 class="text-4xl font-bold">Thank You</h1>
-        <p class="mt-2 text-lg">Your order number is <span class="font-bold text-2xl">0008</span></p>
+        <p class="mt-2 text-lg">Your order number is <span class="font-bold text-2xl">{{ str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT) }}</span></p>
         <p class="mt-2 text-lg">Please pay at the counter.</p>
     </div>
 
     <div class="mt-8">
-        <a href="/" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">TAP!</a>
+        <!-- <a href="/" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">TAP!</a> -->
+        <form action="{{ url('/cart/clear') }}">
+            @csrf
+            <button type="submit" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">
+                TAP!
+            </button>
+        </form>
     </div>
 
 </body>
