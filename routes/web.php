@@ -25,3 +25,6 @@ Route::post('/cart/remove/{id}', [FoodController::class, 'removeFromCart']);
 Route::get('/payment', [FoodController::class, 'payment']);
 Route::get('/cart/clear', [FoodController::class, 'clearCart']);
 
+Route::get('/orders', [FoodController::class, 'orders']);
+
+

@@ -96,9 +96,24 @@
                                             <button type="button" onclick="increaseQuantity('{{ $menu->menu_item_id }}')" class="px-5 py-5 bg-gray-300 rounded-r-md text-gray-700 hover:bg-gray-400 text-lg">+</button>
                                         </div>
                                         <div class="grid grid-cols-2 gap-4">
-                                            <button type="submit" class="bg-yellow-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
+                                            <button type="submit" onclick="return validateAddToCart('{{ $menu->menu_item_id }}')" class="bg-yellow-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
                                                 Add to Cart
                                             </button>
+                                            <script>
+                                                function validateAddToCart(menuItemId) {
+                                                    // Example validation logic
+                                                    const quantityInput = document.getElementById(`quantity-${menuItemId}`);
+                                                    const quantity = parseInt(quantityInput.value);
+
+                                                    if (isNaN(quantity) || quantity <= 0) {
+                                                        alert('Please enter a valid quantity.');
+                                                        return false; // Prevent form submission
+                                                    }
+
+                                                    alert('Item successfully added to cart!');
+                                                    return true; // Allow form submission
+                                                }
+                                            </script>
                                             <span 
                                                 onclick="closeCustomizeModal('{{ $menu->menu_item_id }}')" 
                                                 class="bg-gray-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-gray-700 cursor-pointer">
