@@ -14,6 +14,7 @@ class Menus extends Model
     protected $primaryKey = 'menu_item_id';
 
     protected $fillable = [
+        
         'name', 
         'description',
         'price', 
