@@ -122,11 +122,6 @@ class FoodController extends Controller
 
     public function thankyou()
     {
-        // $orderId = session()->get('order_id'); 
-        // $ordersss = DB::table('order_items')
-        //     ->where('order_id', $orderId)
-        //     ->get();
-
         return view('foods.thankyou', compact('ordersss'));
     }
 
