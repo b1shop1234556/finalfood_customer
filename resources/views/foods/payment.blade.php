@@ -16,7 +16,7 @@
                 <img src="/card.png" alt="Debit / Credit" class="w-20 h-20">
                 <h2 class="mt-4 text-2xl font-semibold text-gray-700">DEBIT / CREDIT</h2>
             </a>
-            <a href="{{ url('/receipt') }}" class="w-[30rem] p-12 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition flex items-center gap-8">
+            <a href="{{ url('/receipt?type=' . $orderType) }}" class="w-[30rem] p-12 bg-white shadow-lg rounded-lg text-center transform hover:scale-105 transition flex items-center gap-8">
                 <img src="/pay.png" alt="Debit / Credit" class="w-20 h-20">
                 <h2 class="mt-4 text-2xl font-semibold text-gray-700">PAY ON COUNTER</h2>
             </a>

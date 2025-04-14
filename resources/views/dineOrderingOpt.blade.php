@@ -25,11 +25,8 @@
 
         <script>
             function handleOptionSelection(option) {
-            if (option === 'dine-in') {
-                window.location.href = '{{ url('/payment?type=dine-in') }}';
-            } else if (option === 'takeout') {
-                window.location.href = '{{ url('/payment?type=takeout') }}';
-            }
+                const type = option === 'dine-in' ? 'dine-in' : 'take-out';
+                window.location.href = `{{ url('/payment?type=') }}${type}`;
             }
         </script>
     </div>
