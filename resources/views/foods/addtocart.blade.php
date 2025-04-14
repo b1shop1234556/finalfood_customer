@@ -36,6 +36,11 @@
                         <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="h-12 w-12 rounded-md mr-2">
                         <div class="flex-1">
                             <p class="font-semibold">{{ $item['name'] }}</p>
+                            @foreach($item['sample'] as $bundle)
+                                <div class="flex flex-col">
+                                    <p class="mx-4">x1 {{ $bundle->bundle_meal_name ?? 'N/A' }}</p>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="text-black font-bold">
                             ₱{{ number_format($item['price'] * $item['quantity'], 2) }}

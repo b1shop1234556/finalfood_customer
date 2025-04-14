@@ -19,7 +19,7 @@
             <br><br>
             ======================================
             <div class="text-center font-bold">
-                <p class="text-2xl">Dine In</p>
+                <p class="text-2xl">{{ ucfirst($orderType) }}</p>
             </div>
             ======================================
             <br><br>
@@ -39,6 +39,11 @@
                     <span class="block font-bold">VM S1 </span>
                     @if (!empty($item['name']))
                         <span class="text-sm px-2">x{{ $item['quantity'] }}</span> <span class="text-sm">{{ $item['name'] }}</span>
+                        @foreach($item['sample'] as $bundle)
+                            <div class="flex flex-col">
+                                <p class="mx-4">x1 {{ $bundle->bundle_meal_name ?? 'N/A' }}</p>
+                            </div>
+                        @endforeach
                     @endif
                     </td>
                     <td class="py-1 text-right align-top">₱{{ number_format($item['price'] * $item['quantity'], 2) }}</td>
@@ -56,7 +61,7 @@
             </div> -->
         </div>
         <div class="mt-8">
-            <a href="{{ url('/orders')}}" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">
+            <a href="{{ url('/orders?type=' . $orderType) }}" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">
                 Process Order
             </a>
         </div>

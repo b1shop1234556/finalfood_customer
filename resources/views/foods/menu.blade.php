@@ -65,14 +65,6 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
                     @foreach ($menus as $menu)
                         <div class="food-card bg-white rounded-lg shadow-lg relative" data-category="{{ $menu->category }}" onclick="openCustomizeModal('{{ $menu->menu_item_id }}', '{{ $menu->name }}', '{{ $menu->price }}', '{{ asset($menu->menu_image) }}')" >
-                            <!-- <div class="flex">
-                                <img src="{{ asset($menu->menu_image) }}" 
-                                    alt="{{ $menu->name }}" 
-                                    class="food-image w-90 h-90 object-cover rounded-md">
-                            </div>
-                            <div class="p-2">
-                                <h3 class="font-semibold text-lg text-center bg-white z-10">{{ $menu->name }}</h3>
-                            </div> -->
                             <div class="flex flex-col items-center p-4">
                                 <img src="{{ asset($menu->menu_image) }}" 
                                     alt="{{ $menu->name }}" 
@@ -85,10 +77,49 @@
                                     <img src="{{ asset($menu->menu_image) }}" alt="{{ $menu->name }}" class="w-full h-40 object-cover rounded-md mb-4">
                                     <p class="text-lg font-semibold">{{ $menu->name }}</p>
                                     <p class="text-sm text-gray-600">{{ $menu->description }}</p>
+                                    <br>
+                                    <!-- @php
+                                        $menuBundles = $bundles->where('bundle_item_id', $menu->menu_item_id);
+                                    @endphp
+
+                                    @if($menuBundles->count() > 0)
+                                        <h3 class="font-semibold text-gray-700 mb-2">Available Bundles:</h3>
+                                        <ul class="mb-4">
+                                            @foreach($menuBundles as $bundle)
+                                                <li class="mb-2 border rounded p-2 flex items-center">
+                                                    <p class="mx-3">1x</p>
+                                                    <img src="{{ asset($bundle->bundle_image) }}" alt="{{ $menu->name }}" class="food-image w-10 h-10 object-cover rounded-md mr-4">
+                                                    <div class="flex-1">
+                                                        <strong>{{ $bundle->bundle_meal_name }}</strong><br>
+                                                        <small class="text-gray-600">{{ $bundle->bundle_description }}</small>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif -->
                                     <p class="text-red-500 font-bold text-lg mb-4">₱{{ number_format($menu->price, 2) }}</p>
                                     
                                     <form action="{{ url('/cart/add', $menu->menu_item_id ) }}" method="POST" >
                                         @csrf
+                                        @php
+                                            $menuBundles = $bundles->where('bundle_item_id', $menu->menu_item_id);
+                                        @endphp
+
+                                        @if($menuBundles->count() > 0)
+                                            <h3 class="font-semibold text-gray-700 mb-2">Available Bundles:</h3>
+                                            <ul class="mb-4">
+                                                @foreach($menuBundles as $bundle)
+                                                    <li class="mb-2 border rounded p-2 flex items-center">
+                                                        <p class="mx-3">x1</p>
+                                                        <img src="{{ asset($bundle->bundle_image) }}" alt="{{ $menu->name }}" class="food-image w-10 h-10 object-cover rounded-md mr-4">
+                                                        <div class="flex-1">
+                                                            <strong name="sample"> {{ $bundle->bundle_meal_name }}</strong><br>
+                                                            <small class="text-gray-600">{{ $bundle->bundle_description }}</small>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                         <h1 for="quantity-{{ $menu->menu_item_id }}" class="block text-center font-bold text-gray-700 mb-2">Quantity</h1>
                                         <div class="flex items-center justify-center w-full mb-4 font-bold">
                                             <button type="button" onclick="decreaseQuantity('{{ $menu->menu_item_id }}')" class="px-5 py-5 bg-gray-300 rounded-l-md text-gray-700 hover:bg-gray-400 text-lg">-</button>
@@ -99,21 +130,33 @@
                                             <button type="submit" onclick="return validateAddToCart('{{ $menu->menu_item_id }}')" class="bg-yellow-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-red-600">
                                                 Add to Cart
                                             </button>
-                                            <script>
+                                            <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+                                            <!-- <script>
                                                 function validateAddToCart(menuItemId) {
-                                                    // Example validation logic
                                                     const quantityInput = document.getElementById(`quantity-${menuItemId}`);
                                                     const quantity = parseInt(quantityInput.value);
 
                                                     if (isNaN(quantity) || quantity <= 0) {
-                                                        alert('Please enter a valid quantity.');
-                                                        return false; // Prevent form submission
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Invalid Quantity',
+                                                            text: 'Please enter a valid quantity.',
+                                                            timer: 1500,
+                                                            showConfirmButton: false
+                                                        });
+                                                        return false; 
                                                     }
 
-                                                    alert('Item successfully added to cart!');
-                                                    return true; // Allow form submission
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Added to Cart',
+                                                        text: 'Item successfully added to cart!',
+                                                        timer: 1500,
+                                                        showConfirmButton: false
+                                                    });
+                                                    return true;
                                                 }
-                                            </script>
+                                            </script> -->
                                             <span 
                                                 onclick="closeCustomizeModal('{{ $menu->menu_item_id }}')" 
                                                 class="bg-gray-500 px-4 py-2 rounded-md text-white font-semibold text-center hover:bg-gray-700 cursor-pointer">
@@ -156,7 +199,12 @@
                         <div class="flex justify-between items-center bg-yellow-100 p-2 rounded-lg flex-1">
                             <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="h-12 w-12 rounded-md mr-2">
                             <div class="flex-1">
-                            <p class="font-semibold">{{ $item['name'] }}</p>
+                                <p class="font-semibold">{{ $item['name'] }}</p>
+                                @foreach($bundles->where('bundle_item_id', $item['id']) as $bundle)
+                                    <div class="flex flex-col">
+                                        <p class="mx-4">x1 {{ $bundle->bundle_meal_name ?? 'N/A' }}</p>
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="text-black font-bold">
                             ₱{{ number_format($item['price'] * $item['quantity'], 2) }}
