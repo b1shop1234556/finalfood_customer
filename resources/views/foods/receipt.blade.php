@@ -12,7 +12,9 @@
             <p class="text-center text-sm mb-1">1/F, Mongkok Commercial Ctr</p>
             <p class="text-center text-sm mb-1">Jollibee POS Terminal 3</p>
             <p class="text-center text-sm mb-4">DATE: {{ now()->format('d-m-Y') }} TIME: {{ now()->format('h:i A') }}</p>
-            <p class="text-center text-sm mb-4">Cashier: {{ auth()->user()->name ?? 'N/A' }}</p>
+            @foreach ($ordersss->take(1) as $ord)
+            <p class="text-center text-sm mb-4">Order No: {{ $ord->order_id }}</p>
+            @endforeach
             <div class="flex justify-center mt-4">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Receipt%20Details" alt="QR Code" class="w-20 h-20">
             </div>
