@@ -72,7 +72,7 @@
                                 <h3 class="font-semibold text-lg text-center">{{ $menu->name }}</h3>
                             </div>
                             <div id="customize-modal-{{ $menu->menu_item_id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                                <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+                            <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative max-h-[80vh] overflow-y-auto">
                                     <h2 class="text-xl font-bold mb-4">Customize your Order</h2>
                                     <img src="{{ asset($menu->menu_image) }}" alt="{{ $menu->name }}" class="w-full h-40 object-cover rounded-md mb-4">
                                     <p class="text-lg font-semibold">{{ $menu->name }}</p>
