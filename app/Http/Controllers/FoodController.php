@@ -163,6 +163,11 @@ class FoodController extends Controller
     public function receipt(Request $request)
     {
         $orderType = $request->query('type'); 
-        return view('foods.receipt', compact('orderType'));
+        $ordersss = DB::table('order_items')
+            ->join('orders', 'order_items.order_id', '=', 'orders.order_id')
+            ->select('order_items.*', 'orders.total_price', 'orders.status', 'orders.order_date')
+            ->get();
+
+        return view('foods.receipt', compact('orderType', 'ordersss'));
     }
 }
