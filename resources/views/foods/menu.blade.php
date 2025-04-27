@@ -19,10 +19,10 @@
                 <h2 class="sticky top-0 bg-white text-2xl font-bold mb-5 text-center z-20 p-2 rounded-tr-lg">Menu</h2>
                 <nav class="space-y-2 p-3">
                     <!-- Dynamic category buttons -->
-                    <button data-category-btn="bundle-meals" onclick="filterMenu(['bundle', 'bundle1','bundle2'], ['bundle', 'bundle1','bundle2'])" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
+                    <button data-category-btn="bundle-meals" onclick="filterMenu(['bundle', 'bundle1','bundle2', 'bundle3', 'bundle4', 'bundle5'], ['bundle', 'bundle1','bundle2', 'bundle3', 'bundle4', 'bundle5'])" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         Bundles Meals
                     </button>
-                    <button data-category-btn="breakfast" onclick="filterMenu('breakfast')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
+                    <button data-category-btn="breakfast" onclick="filterMenu('breakfast','bundle3')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/breakfast.png" alt="breakfast" class="h-13 w-20"> 
                         <span>Breakfast</span>
                     </button>
@@ -30,7 +30,7 @@
                         <img src="/Burgers.png" alt="burgers" class="h-13 w-20"> 
                         <span>Burgers</span>
                     </button>
-                    <button data-category-btn="burgchickenjoyers" onclick="filterMenu('chickenjoy','chickenjoy')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
+                    <button data-category-btn="burgchickenjoyers" onclick="filterMenu('chickenjoy','bundle4')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/chickenjoy.png" alt="Jolly chickenjoy" class="h-13 w-20"> 
                         <span>Chickenjoy</span>
                     </button>
@@ -38,7 +38,7 @@
                         <img src="/hotdog.png" alt="Jolly Hotdog" class="h-13 w-20"> 
                         <span>Jolly Hotdog & Pies</span>
                     </button>
-                    <button data-category-btn="spaghetti" onclick="filterMenu('spaghetti','spaghetti')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
+                    <button data-category-btn="spaghetti" onclick="filterMenu('spaghetti','bundle1','bundle2')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/jolly.png" alt="Jolly Spaghetti" class="h-13 w-20"> 
                         <span>Jolly Spaghetti</span>
                     </button>
@@ -51,7 +51,7 @@
                         <span>Beverages</span>
                     </button>
                     <button data-category-btn="desserts" onclick="filterMenu('desserts')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
-                        <img src="/cokess.png" alt="Desserts" class="h-13 w-20"> 
+                        <img src="/Peach.png" alt="Desserts" class="h-13 w-20"> 
                         <span>Peach</span>
                     </button>
                     <button data-category-btn="palabok" onclick="filterMenu('palabok','bundle')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
