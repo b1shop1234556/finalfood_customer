@@ -26,7 +26,7 @@
         <form action="{{ url('/') }}">
             @csrf
             <button type="submit" class="px-6 py-2 bg-red-500 text-white font-bold rounded-lg shadow-lg hover:bg-red-600 transition">
-                TAP!
+                TAP TO ORDER!
             </button>
         </form>
     </div>

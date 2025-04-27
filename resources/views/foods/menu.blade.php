@@ -11,7 +11,7 @@
         <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     </head>
     <body class="bg-gray-100  flex flex-col"> 
-        <nav class="sticky top-0 bg-blue-100 w-full p-1 shadow-md flex justify-between items-center text-white z-50" style="background-image: url('/sample.png'); background-size: cover; background-position: center;">
+        <nav class="sticky top-0 bg-blue-100 w-full p-1 shadow-md flex justify-between items-center text-white z-50" style="background-image: url('/jolli.png'); background-size: cover; background-position: center;">
             <img  class="h-16 w-auto">
         </nav>
         <div class="flex flex-wrap mt-1">
@@ -21,6 +21,10 @@
                     <!-- Dynamic category buttons -->
                     <button data-category-btn="value-meals" onclick="filterMenu('all')" class="category-btn w-full px-4 py-2 flex items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                          All Value Meals
+                    </button>
+                    <button data-category-btn="breakfast" onclick="filterMenu('breakfast')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
+                        <img src="/bun.png" alt="breakfast" class="h-13 w-20"> 
+                        <span>Breakfast</span>
                     </button>
                     <button data-category-btn="breakfast" onclick="filterMenu('breakfast')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/breakfast.png" alt="breakfast" class="h-13 w-20"> 
@@ -36,7 +40,7 @@
                     </button>
                     <button data-category-btn="jollyhotdog" onclick="filterMenu('jollyhotdog')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/hotdog.png" alt="Jolly Hotdog" class="h-13 w-20"> 
-                        <span>Jolly Hotdog</span>
+                        <span>Jolly Hotdog & Pies</span>
                     </button>
                     <button data-category-btn="spaghetti" onclick="filterMenu('spaghetti')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/jolly.png" alt="Jolly Spaghetti" class="h-13 w-20"> 
@@ -46,12 +50,12 @@
                         <img src="/steak.png" alt="Burger Steak" class="h-13 w-20"> 
                         <span>Burger Steak</span>
                     </button>
-                    <button data-category-btn="burgersteak" onclick="filterMenu('beverages')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
+                    <button data-category-btn="beverages" onclick="filterMenu('beverages')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/cokess.png" alt="Beverages" class="h-13 w-20"> 
                         <span>Beverages</span>
                     </button>
                     <button data-category-btn="desserts" onclick="filterMenu('desserts')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
-                        <img src="/cokess.png" alt="Desserts" class="h-13 w-20"> 
+                        <img src="/Peach.png" alt="Desserts" class="h-13 w-20"> 
                         <span>Peach</span>
                     </button>
                     <button data-category-btn="palabok" onclick="filterMenu('palabok')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
@@ -72,10 +76,11 @@
                                 <h3 class="font-semibold text-lg text-center">{{ $menu->name }}</h3>
                             </div>
                             <div id="customize-modal-{{ $menu->menu_item_id }}" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                            <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative max-h-[80vh] overflow-y-auto">
-                                    <h2 class="text-xl font-bold mb-4">Customize your Order</h2>
-                                    <img src="{{ asset($menu->menu_image) }}" alt="{{ $menu->name }}" class="w-full h-40 object-cover rounded-md mb-4">
+                                <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative max-h-[80vh] overflow-y-auto">
+                                    <!-- <h2 class="text-xl font-bold mb-4">Customize your Order</h2> -->
+                                   
                                     <p class="text-lg font-semibold">{{ $menu->name }}</p>
+                                    <img src="{{ asset($menu->menu_image) }}" alt="{{ $menu->name }}" class="w-full h-40 object-cover rounded-md mb-4">
                                     <p class="text-sm text-gray-600">{{ $menu->description }}</p>
                                     <br>
                                     <!-- @php
@@ -179,12 +184,27 @@
                 <h2 class="text-lg font-bold mb-4">Your Order</h2>
 
                 <a href="{{ url('/order') }}" class="bg-white border border-gray-300 px-4 py-2 rounded-lg font-semibold text-black hover:bg-gray-100 flex items-center space-x-2 shadow-md">
-                <span>View Cart</span>
-                <span class="bg-yellow-400 text-black text-xs font-bold rounded-full px-2 py-1">
-                    {{ session('cart') ? count(session('cart')) : 0 }}
-                </span>
+                    <span>View Cart</span>
+                    <span class="bg-yellow-400 text-black text-xs font-bold rounded-full px-2 py-1">
+                        {{ session('cart') ? count(session('cart')) : 0 }}
+                    </span>
                 </a>
+
+                <button id="toggle-order-details" class="bg-blue-500 px-4 py-2 rounded-lg font-semibold text-white hover:bg-blue-700">
+                    Hide/Show
+                </button>
             </div>
+
+            <script>
+                document.getElementById('toggle-order-details').addEventListener('click', function() {
+                    const orderDetails = document.getElementById('order-details');
+                    if (orderDetails.style.display === 'none') {
+                        orderDetails.style.display = 'block';
+                    } else {
+                        orderDetails.style.display = 'none';
+                    }
+                });
+            </script>
             <div id="order-details" class="space-y-4 max-h-20 overflow-y-auto">
                 @if(session('cart') && count(session('cart')) > 0)
                 @php $total = 0; @endphp
