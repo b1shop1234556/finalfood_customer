@@ -8,11 +8,11 @@
     </head>
     <body class="bg-red-500 min-h-screen flex flex-col items-center justify-center text-white">
         <div class="bg-white text-black p-6 rounded-lg shadow-lg w-100 max-w-md mx-auto mt-8">
-            <h2 class="text-center text-xl font-bold mb-2">JOLLIBEE</h2>
-            <p class="text-center text-sm mb-1">1/F, Mongkok Commercial Ctr</p>
+            <h2 class="text-center text-xl font-bold mb-2">Jollibee</h2>
+            <p class="text-center text-sm mb-1">1/F, Rosario Commercial Market</p>
             <p class="text-center text-sm mb-1">Jollibee POS Terminal 3</p>
-            <p class="text-center text-sm mb-4">DATE: {{ now()->format('d-m-Y') }} TIME: {{ now()->format('h:i A') }}</p>
-            <p class="text-center text-sm mb-4">Order No: </p>
+            <p class="text-center text-sm mb-4">DATE: {{ now()->setTimezone('Asia/Manila')->format('d-m-Y') }} TIME: {{ now()->setTimezone('Asia/Manila')->format('h:i A') }}</p>
+            <p class="text-center text-sm mb-4">Order No.</p>
             <div class="flex justify-center mt-4">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Receipt%20Details" alt="QR Code" class="w-20 h-20">
             </div>
@@ -36,7 +36,7 @@
                 @php $total += $item['price'] * $item['quantity']; @endphp
                 <tr>
                     <td class="py-1 px-3">
-                    <span class="block font-bold">VM S1 </span>
+                    <span class="block font-bold">{{ $item['name'] ?? 'N/A' }}</span>
                     @if (!empty($item['name']))
                         <span class="text-sm px-2">x{{ $item['quantity'] }}</span> <span class="text-sm">{{ $item['name'] }}</span>
                         @foreach($item['sample'] as $bundle)
