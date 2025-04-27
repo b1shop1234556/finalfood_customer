@@ -37,6 +37,16 @@ function filterMenu(categories = [], bundles = []) {
             activeButton.classList.add('bg-yellow-100', 'text-black');
         }
     }
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('bg-yellow-100', 'text-black'); 
+        btn.classList.add('bg-yellow-100'); 
+    });
+
+    const activeButton = document.querySelector(`[data-category-btn="${category}"]`);
+    if (activeButton) {
+        activeButton.classList.add('bg-yellow-100', 'text-black'); 
+        activeButton.classList.remove('bg-yellow-100'); 
+    }
 }
 
 

@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Select Payment</title>
+        <title>Jollibee</title>
+        <link rel="icon" href="/jollibee.png" type="image/png">
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-gray-100 min-h-screen flex flex-col items-center p">
