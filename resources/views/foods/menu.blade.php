@@ -56,7 +56,7 @@
                     </button>
                     <button data-category-btn="palabok" onclick="filterMenu('palabok','bundle')" class="category-btn w-full px-4 py-2 flex flex-col items-center hover:bg-gray-200 border bg-yellow-100 rounded-lg">
                         <img src="/palabok.png" alt="Palabok and Palabok Bundle" class="h-13 w-20"> 
-                        <span>Palabok & Bundle</span>
+                        <span>Palabok</span>
                     </button>
                 </nav>
             </aside>
