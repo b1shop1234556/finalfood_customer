@@ -40,6 +40,7 @@ class FoodController extends Controller
     public function addToCart(Request $request, $menu_item_id)
     {
         $menu = Menus::findOrFail($menu_item_id);
+        $orderId = random_int(100000, 999999);
 
         $bundles = DB::table('bundles as b')
             ->join('menu_items as mi', 'mi.menu_item_id', '=', 'b.bundle_item_id')
@@ -68,7 +69,8 @@ class FoodController extends Controller
                 "image" => $menu->menu_image,
                 "quantity" => $requestedQuantity,
                 "id" => $menu->menu_item_id,
-                'sample' => $bundles
+                'sample' => $bundles,
+                'number' => $orderId
             ];
         }
         session()->put('cart', $cart);
@@ -157,17 +159,15 @@ class FoodController extends Controller
 
     public function thankyou()
     {
-        return view('foods.thankyou', compact('ordersss'));
+        // return view('foods.thankyou', compact('ordersss'));
     }
 
     public function receipt(Request $request)
     {
         $orderType = $request->query('type'); 
-        $ordersss = DB::table('order_items')
-            ->join('orders', 'order_items.order_id', '=', 'orders.order_id')
-            ->select('order_items.*', 'orders.total_price', 'orders.status', 'orders.order_date')
-            ->get();
+       
+        $cart = session()->get('cart', []);
 
-        return view('foods.receipt', compact('orderType', 'ordersss'));
+        return view('foods.receipt', compact('orderType'));
     }
 }
