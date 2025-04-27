@@ -7,7 +7,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-gray-100 min-h-screen flex flex-col items-center p">
-        <img src="/poster.jpg" alt="Food Item" class="w-full h-80 object-cover">   
+        <img src="/jolli.png" alt="Food Item" class="w-full h-80 object-cover">   
         <div class="mt-6 text-center">
             <h1 class="text-3xl font-bold text-gray-800">How will you make to pay?</h1>
         </div>

@@ -10,13 +10,13 @@
 </head>
 <!-- <body class="bg-gray-100 min-h-screen flex flex-col items-center p"> -->
 <body class="">
-    <nav class="sticky top-0 bg-blue-100 w-full p-4 shadow-md flex justify-between items-center text-white z-50" style="background-image: url('/sample.png'); background-size: cover; background-position: center; border: 2px solid #ccc;">
+    <nav class="sticky top-0 bg-blue-100 w-full p-4 shadow-md flex justify-between items-center text-white z-50" style="background-image: url('/jolli.png'); background-size: cover; background-position: center; border: 2px solid #ccc;">
         <img class="h-16 w-auto">
     </nav>
     <div class="fixed justify-center items-center sticky top-0 bg-white z-10" style="margin-bottom: 40px;" >
         <h2 class="text-2xl font-bold p-5 bg-white text-center z-20 " style="position: fixed; top: 0; width: 100%; padding-top: 14%; margin-bottom: 100px;">Your Order</h2>
     </div>
-    <div id="order-summary" style="padding: 10px; border-radius: 1px; padding-top: 1vh">
+    <div id="order-summary" style="padding: 10px; border-radius: 1px; padding-top: 6vh">
         <div id="order-details" class="space-y-4 max-h-50 overflow-y-auto" style="padding: 8px; border-radius: 1px; margin-bottom: 100px;">
             @if(session('cart') && count(session('cart')) > 0)
             @php $total = 0; @endphp
