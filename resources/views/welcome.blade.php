@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <title>Jollibee</title>
+    <link rel="icon" href="/breakfast.png" type="image/png">
 
     <link href="{{ asset('/css/dineOrdering.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/orderview.css') }}" rel="stylesheet">

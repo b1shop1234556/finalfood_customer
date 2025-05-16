@@ -1,20 +1,3 @@
-// function filterMenu(category,bundle) {
-//     document.querySelectorAll('.food-card').forEach(card => {
-//         card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
-//         card.style.display = (bundle === 'bundle' || card.dataset.category === bundle) ? 'block' : 'none';
-//     });
-
-//     document.querySelectorAll('.category-btn').forEach(btn => {
-//         btn.classList.remove('bg-yellow-100', 'text-black'); 
-//         btn.classList.add('bg-yellow-100'); 
-//     });
-
-//     const activeButton = document.querySelector(`[data-category-btn="${category}"]`);
-//     if (activeButton) {
-//         activeButton.classList.add('bg-yellow-100', 'text-black'); 
-//         activeButton.classList.remove('bg-yellow-100'); 
-//     }
-// }
 function filterMenu(categories = [], bundles = []) {
     document.querySelectorAll('.food-card').forEach(card => {
         const cardCategory = card.dataset.category;
@@ -37,6 +20,15 @@ function filterMenu(categories = [], bundles = []) {
             activeButton.classList.add('bg-yellow-100', 'text-black');
         }
     }
+    document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-yellow-100', 'text-black'); 
+                btn.classList.add('bg-yellow-100'); 
+            });
+    const activeButton = document.querySelector(`[data-category-btn="${category}"]`);
+        if (activeButton) {
+            activeButton.classList.add('bg-yellow-100', 'text-black'); 
+            activeButton.classList.remove('bg-yellow-100'); 
+        }
 }
 
 
