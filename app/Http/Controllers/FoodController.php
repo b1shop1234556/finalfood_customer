@@ -40,7 +40,13 @@ class FoodController extends Controller
     public function addToCart(Request $request, $menu_item_id)
     {
         $menu = Menus::findOrFail($menu_item_id);
-        $orderId = random_int(100000, 999999);
+
+        // Use a session-based order_id for the current cart/session
+        $orderId = session()->get('current_order_id');
+        if (!$orderId) {
+            $orderId = random_int(100000, 999999);
+            session()->put('current_order_id', $orderId);
+        }
 
         $bundles = DB::table('bundles as b')
             ->join('menu_items as mi', 'mi.menu_item_id', '=', 'b.bundle_item_id')
@@ -56,9 +62,9 @@ class FoodController extends Controller
                 'mi.price'
             )
             ->get();
-        $cart = session()->get('cart', []);
 
-        $requestedQuantity = max((int)$request->input('quantity', 1), 1); 
+        $cart = session()->get('cart', []);
+        $requestedQuantity = max((int)$request->input('quantity', 1), 1);
 
         if (isset($cart[$menu_item_id])) {
             $cart[$menu_item_id]['quantity'] += $requestedQuantity;
@@ -75,6 +81,17 @@ class FoodController extends Controller
         }
         session()->put('cart', $cart);
 
+        // Save to order_items table every time an item is added to cart
+        $subtotal = $menu->price * $requestedQuantity;
+        DB::table('order_items')->insert([
+            'order_id' => $orderId,
+            'menu_item_id' => $menu->menu_item_id,
+            'quantity' => $requestedQuantity,
+            'subtotal' => $subtotal,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         return redirect()->back()->with('success', 'Item added to cart!');
     }
 
@@ -82,9 +99,28 @@ class FoodController extends Controller
     public function updateCart(Request $request, $id)
     {
         $cart = session()->get('cart', []);
+        $orderId = session()->get('current_order_id');
+
         if (isset($cart[$id])) {
-            $cart[$id]['quantity'] = $request->quantity;
+            $newQuantity = max((int)$request->quantity, 1);
+            $cart[$id]['quantity'] = $newQuantity;
             session()->put('cart', $cart);
+
+            // Update order_items table as well
+            if ($orderId) {
+                // Get the price from the cart or database
+                $price = $cart[$id]['price'];
+                $subtotal = $price * $newQuantity;
+
+                \DB::table('order_items')
+                    ->where('order_id', $orderId)
+                    ->where('menu_item_id', $id)
+                    ->update([
+                        'quantity' => $newQuantity,
+                        'subtotal' => $subtotal,
+                        'updated_at' => now(),
+                    ]);
+            }
         }
         return redirect()->back();
     }
@@ -92,9 +128,19 @@ class FoodController extends Controller
     public function removeFromCart($id)
     {
         $cart = session()->get('cart', []);
+        $orderId = session()->get('current_order_id');
+
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
+
+            // Also delete from order_items table for this order_id and menu_item_id
+            if ($orderId) {
+                DB::table('order_items')
+                    ->where('order_id', $orderId)
+                    ->where('menu_item_id', $id)
+                    ->delete();
+            }
         }
         return redirect()->back()->with('success', 'Item removed from cart');
     }
@@ -109,7 +155,14 @@ class FoodController extends Controller
     public function orders(Request $request)
     {
         $orderType = $request->query('type'); 
-        $orderId = random_int(100000, 999999);
+
+        // Use the same session-based order_id as in addToCart
+        $orderId = session()->get('current_order_id');
+        if (!$orderId) {
+            $orderId = random_int(100000, 999999);
+            session()->put('current_order_id', $orderId);
+        }
+
         $cart = session()->get('cart', []);
 
         if (empty($cart)) {
@@ -122,26 +175,39 @@ class FoodController extends Controller
             $subtotal = $item['price'] * $item['quantity'];
             $totalPrice += $subtotal;
 
-            DB::table('order_items')->insert([
-                'order_id' => $orderId, 
-                'menu_item_id' => $item['id'],
-                'quantity' => $item['quantity'],
-                'subtotal' => $subtotal,
+            // Prevent duplicate order_items for the same order_id and menu_item_id
+            $existing = DB::table('order_items')
+                ->where('order_id', $orderId)
+                ->where('menu_item_id', $item['id'])
+                ->first();
+
+            if (!$existing) {
+                DB::table('order_items')->insert([
+                    'order_id' => $orderId, 
+                    'menu_item_id' => $item['id'],
+                    'quantity' => $item['quantity'],
+                    'subtotal' => $subtotal,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        // Insert order only if it doesn't exist yet
+        $existingOrder = DB::table('orders')->where('order_id', $orderId)->first();
+        if (!$existingOrder) {
+            DB::table('orders')->insert([
+                'order_id' => $orderId,
+                'total_price' => $totalPrice,
+                'status' => $orderType,
+                'order_date' => now(),
                 'created_at' => now(),
-                'updated_at' => now(),
+                'updated_at' => now()
             ]);
         }
 
-        DB::table('orders')->insert([
-            'order_id' => $orderId,
-            'total_price' => $totalPrice,
-            'status' => $orderType,
-            'order_date' => now(),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
         session()->forget('cart'); 
+        session()->forget('current_order_id');
 
         $ordersss = DB::table('order_items')
             ->where('order_id', $orderId)
